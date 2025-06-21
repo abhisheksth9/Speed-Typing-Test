@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css')}}">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="navbar-logo">MyApp</div>
+        <a href="{{ url_for('index') }}" class="nav-btn logout">Logout</a>
+
+    </nav>
+
+    <main class="container">
+        <section class="welcome-section">
+            <h1>Welcome, {{ current_user.Name }}</h1>
+        </section>
+        
+        <section class="profile-stats">
+            <h2>Your profile</h2>
+            <ul>
+                <li><strong>Username: </strong> {{ current_user.Username }}</li>
+                <li><strong>Highest Score: </strong> {{ highscore }}</li>
+            </ul>
+        </section>
+        
+        <hr>
+
+        <section class="top-scores">
+            <h2>Top 5 Scores</h2>
+            {% if scores %}
+                <ol class="score-list">
+                    {% for score in scores %}
+                        <li>{{ score.score}} </li>
+                    {% endfor %}
+                </ol>
+            {% else %}
+                <p>No scores yet. Play a test and come back!</p>
+            {% endif %}
+        </section>
+        
+    </main>
+</body>
+</html>
