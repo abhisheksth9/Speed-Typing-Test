@@ -97,6 +97,14 @@ def profile():
     top_scores = Scores.query.filter_by(user_id=current_user.id).order_by(Scores.score.desc()).limit(5).all()
     return render_template("profile.html", highscore=current_user.HighScore, top_scores=top_scores)
 
+@app.route('/get-paragraph')
+def get_paragraph():
+    import random
+    with open('data/paragraphs.txt', 'r', encoding='utf-8') as file:
+        paragraphs = [p.strip() for p in file.read().split('\n') if p.strip()]
+    return jsonify({"content": random.choice(paragraphs)})
+
+
 if __name__ == "__main__":
     with app.app_context():
         db.create_all()

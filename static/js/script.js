@@ -1,4 +1,4 @@
-const RANDOM_QUOTE_API_URL = 'http://api.quotable.io/random';
+const RANDOM_PARAGRAPH_URL = '/get-paragraph';
 const textDisplayElement = document.getElementById('textDisplay');
 const textInputElement = document.getElementById('textInput');
 const timerElement = document.getElementById('timer');
@@ -48,7 +48,7 @@ textInputElement.addEventListener('input', () => {
         } else {
             characterSpan.classList.add('incorrect');
             characterSpan.classList.remove('correct');
-            correct = false;
+            // correct = false;
         }
     });
 
@@ -72,9 +72,12 @@ textInputElement.addEventListener('input', () => {
 });
 
 function getRandomText() {
-    return fetch(RANDOM_QUOTE_API_URL)
+    return fetch(RANDOM_PARAGRAPH_URL)
         .then(response => response.json())
-        .then(data => data.content);
+        .then(data => data.content)
+        .catch(() => {
+            return "Error: Couldn't fetch Text"
+        })
 }
 
 async function renderNewText() {
@@ -124,4 +127,6 @@ function endTest() {
     alert(`Test Complete! \nWPM: ${wpm}\tAccuracy: ${accuracy}%`)
 }
 
-renderNewText();
+document.addEventListener('DOMContentLoaded', () => {
+  renderNewText();
+});
