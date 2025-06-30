@@ -89,13 +89,29 @@ def save_score():
         current_user.HighScore = current_top_score[0]
         db.session.commit()
 
+    print(f"Saving score: {new_score} for user ID: {current_user.id}")
     return jsonify({"message": "Score saved and high scores updated!"}), 200
 
 @app.route("/profile")
 @login_required
 def profile():
     top_scores = Scores.query.filter_by(user_id=current_user.id).order_by(Scores.score.desc()).limit(5).all()
+    print("Top Scores fetched: ", top_scores)
+    for s in top_scores:
+        print(s.score)
     return render_template("profile.html", highscore=current_user.HighScore, top_scores=top_scores)
+
+@app.route('/user/wpm-scores')
+@login_required
+def get_wpm_scores():
+    scores = Scores.query.filter_by(user_id=current_user.id).order_by(Scores.id.asc()).all()
+    score_data = [{'x': i + 1, 'y': score.score} for i, score in enumerate(scores)]
+    return jsonify(score_data)
+
+@app.route("/logout")
+def logout():
+    logout_user()
+    return redirect(url_for('index'))
 
 @app.route('/get-paragraph')
 def get_paragraph():
