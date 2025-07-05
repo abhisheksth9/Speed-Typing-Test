@@ -13,7 +13,7 @@ let totalTyped = 0;
 let correctTyped = 0;
 
 // Duration Button Setup
-document.querySelectorAll('.duration-btn')?.forEach(button => {
+document.querySelectorAll('.duration-btn').forEach(button => {
     button.addEventListener('click', () => {
         document.querySelectorAll('.duration-btn').forEach(btn => btn.classList.remove('active'));
         button.classList.add('active');
@@ -135,7 +135,25 @@ function endTest() {
 
     saveScoreToServer(wpm);
 
-    alert(`Test Complete!\nWPM: ${wpm}\nAccuracy: ${accuracy}%`);
+    const modalContainer = document.getElementById('modal-container');
+    const closeBtn = document.getElementById('close-btn')
+
+    document.getElementById('modal-wpm').innerText = `WPM: ${wpm}`;
+    document.getElementById('modal-accuracy').innerText = `Accuracy: ${accuracy}%`;
+
+    modalContainer.style.display = 'flex';
+    
+    closeBtn.addEventListener('click', function(){
+        modalContainer.style.display = 'none';
+        window.location.reload();
+    })
+
+    window.addEventListener('click', function(e){
+        if (e.target === modalContainer){
+            modalContainer.style.display = 'none';
+            window.location.reload();
+        }
+    })
 }
 
 // Chart Rendering Logic
@@ -193,10 +211,7 @@ function renderWpmChart() {
         .catch(err => console.error("Error loading WPM data:", err));
 }
 
-// Init
 document.addEventListener('DOMContentLoaded', () => {
-    if (textInputElement && textDisplayElement) {
-        renderNewText();
-    }
+    renderNewText();
     renderWpmChart();
 });

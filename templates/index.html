@@ -7,9 +7,8 @@
   <script src="{{ url_for('static', filename='js/script.js') }}" defer></script>
   <title>Speed Typing Test</title>
 </head>
-<body>
 
-  <!-- Navbar -->
+<body>
   <nav class="navbar">
     <div class="navbar-logo">MyApp</div>
     <div class="navbar-links">
@@ -19,27 +18,29 @@
     </div>
   </nav>
 
-  <!-- Main Container -->
   <div class="container">
-
-    <!-- Time Duration Buttons -->
     <div class="time-buttons">
       <button class="duration-btn" data-duration="60">1 Minute</button>
       <button class="duration-btn" data-duration="120">2 Minutes</button>
       <button class="duration-btn" data-duration="180">3 Minutes</button>
     </div>
 
-    <!-- Status Display -->
     <div class="status-bar">
       <div class="status-item">⏱️ Time: <span id="timer">0</span>s</div>
       <div class="status-item">⌨️ WPM: <span id="wpm">0</span></div>
       <div class="status-item">✅ Accuracy: <span id="accuracy">0</span>%</div>
     </div>
 
-    <!-- Typing Area -->
     <div class="text-display" id="textDisplay" aria-live="polite"></div>
     <textarea class="text-input" id="textInput" placeholder="Start typing here..." autofocus></textarea>
+  </div>
 
+  <div class="modal-container" id="modal-container">
+    <div class="modal">
+      <p id="modal-wpm">WPM: </p>
+      <p id="modal-accuracy">Accuracy: </p>
+      <div id="close-btn">&times;</div>
+    </div>
   </div>
 </body>
 </html>

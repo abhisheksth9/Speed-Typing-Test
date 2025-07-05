@@ -4,10 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Profile</title>
-
-  <!-- External CSS -->
   <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
-  <!-- Chart.js -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
@@ -28,11 +25,13 @@
       <ul>
         <li><strong>Username:</strong> {{ current_user.Username }}</li>
         <li><strong>Highest Score:</strong> {{ highscore }}</li>
+        <li><strong>Average WPM:</strong> {{ avg_score }}</li>
       </ul>
     </section>
 
     <hr>
 
+    <!-- Display Top Scores -->
     <section class="top-scores">
       <h2>Top 5 Scores</h2>
       {% if top_scores %}
@@ -52,7 +51,6 @@
     </section>
   </main>
 
-  <!-- External JavaScript -->
   <script src="{{ url_for('static', filename='js/script.js') }}" defer></script>
   
 </body>

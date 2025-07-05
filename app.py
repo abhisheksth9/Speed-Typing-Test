@@ -1,7 +1,8 @@
-from flask import Flask, render_template, request, redirect, url_for, flash, jsonify
+from flask import Flask, render_template, request, redirect, url_for, flash, jsonify, get_flashed_messages
 from flask_login import UserMixin, LoginManager, login_user, logout_user, login_required, current_user
 from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
+from sqlalchemy import func
 
 app = Flask(__name__)
 app.secret_key = 'your_secret_key_here'
@@ -49,7 +50,6 @@ def login():
         user = Users.query.filter((Users.Username == username) | (Users.Email == username)).first()
         if user and user.check_password(password):
             login_user(user)
-            flash('Login Successful!', 'success')
             return redirect(url_for('index'))
         else:
             flash('Invalid username or password', 'danger')
@@ -96,10 +96,15 @@ def save_score():
 @login_required
 def profile():
     top_scores = Scores.query.filter_by(user_id=current_user.id).order_by(Scores.score.desc()).limit(5).all()
+
+    avg_score = db.session.query(func.avg(Scores.score)).filter_by(user_id=current_user.id).scalar()
+    avg_score = round(avg_score, 2) if avg_score else 0
+
     print("Top Scores fetched: ", top_scores)
     for s in top_scores:
         print(s.score)
-    return render_template("profile.html", highscore=current_user.HighScore, top_scores=top_scores)
+    return render_template("profile.html", highscore=current_user.HighScore, top_scores=top_scores, avg_score=avg_score
+)
 
 @app.route('/user/wpm-scores')
 @login_required
@@ -111,6 +116,7 @@ def get_wpm_scores():
 @app.route("/logout")
 def logout():
     logout_user()
+    get_flashed_messages()
     return redirect(url_for('index'))
 
 @app.route('/get-paragraph')
