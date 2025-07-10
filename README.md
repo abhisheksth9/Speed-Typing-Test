@@ -3,16 +3,16 @@ A Flask Web Application that lets users practice typing, view real-time stats li
 
 ## Features
 **User Authentication:** <br>
-  -Sign Up / Login / Logout <br>
+  - Sign Up / Login / Logout <br>
   
 **Typing Test:** <br>
-  -Can Select Time Duration (1,2,3 minutes) <br>
-  -Typing with live accuracy and WPM display <br>
+  - Can Select Time Duration (1,2,3 minutes) <br>
+  - Typing with live accuracy and WPM display <br>
 
 **WPM History & Chart:** <br>
-  -Only visible to logged-in User<br>
-  -Displays top 5 highest scores and average WPM <br>
-  -Line Chart to visualize WPM progress over time (Chart.js)
+  - Only visible to logged-in User<br>
+  - Displays top 5 highest scores and average WPM <br>
+  - Line Chart to visualize WPM progress over time (Chart.js)
 
 ## Installations
 
